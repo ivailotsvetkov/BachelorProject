@@ -7,46 +7,75 @@ using Evereal.VRVideoPlayer;
 
 public class SphereOne : MonoBehaviour
 {
-    public enum VideoName{
-
-    }
 
     public VideoPlayerCtrl firstVideo;
-    public Decisions decision;
- 
-    
+    public Decision decision;
+    string decisionString;
+  
 
     void Start()
     { 
-     
+         
     }
  
     // Update is called once per frame
     void Update()
     {  
-     checkIfVideoHasFinished(firstVideo);
-       changeDecisionName();
+       
+         changeDecisionName();
+         checkIfVideoHasFinished();
     }
-    void checkIfVideoHasFinished(VideoPlayerCtrl video){
-        if(video.currentState.ToString() == "End"){
-            decision.decision1.gameObject.SetActive(true);
-            decision.decision2.gameObject.SetActive(true);   
-            changeVideoName(firstVideo,"WakeUpYes.mp4");
-            firstVideo.InitializeVideo();
+    void checkIfVideoHasFinished(){
+        if(firstVideo.currentState.ToString() == "End"){ // when the scene is finished
+            decision.decision1.gameObject.SetActive(true); 
+            decision.decision2.gameObject.SetActive(true);  
+            if(Input.GetKeyDown("left")){
+                makeDecision(decision.decision1.name); // get the name of the decision
+            }
+            if(Input.GetKeyDown("right")){
+                 makeDecision(decision.decision2.name);
+    }
+          
       }
+       if(firstVideo.currentState.ToString() == "Initialized"){ 
+             decision.decision1.gameObject.SetActive(false); 
+            decision.decision2.gameObject.SetActive(false); 
+           }
     } 
-    
-   public void changeVideoName(VideoPlayerCtrl video,string name)
+    public void makeDecision(string madedDecision){
+               
+                decision.theDecision.TryGetValue(madedDecision,out string test);
+                decisionString = test;
+                 firstVideo.videoFile = decisionString;
+               firstVideo.InitializeVideo();
+    }
+   public void changeVideoName(string name)
         {
-            video.videoFile = name;
-            video.InitializeVideo();
+            firstVideo.videoFile = name; 
+            
         }
         
-         void changeDecisionName(){
-          //   print(firstVideo.videoFile);
-      if(firstVideo.videoFile == "VerryFirstScene.mp4"){
+        
+  // need to put in Decisiions
+   void changeDecisionName(){
+      if(firstVideo.videoFile == "AlarmRings.mp4"){
         decision.decision1.name = "WakeUp";
-        decision.decision1.text = "Wake Up"; 
+        decision.decision1.text = "Wake Up";
+
+        decision.decision2.name = "10moreminutes";
+        decision.decision2.text = "'10 More Minutes'";
+      }
+      if(firstVideo.videoFile == "WakeUpYes.mp4"){
+        decision.decision1.name = "Orange";
+        decision.decision1.text = "Orange"; 
+
+        decision.decision2.name = "Mars";
+        decision.decision2.text = "Mars";
+      }
+        if(firstVideo.videoFile == "VerryFirstScene.mp4"){
+        decision.decision1.name = "WakeUp";
+        decision.decision1.text = "Wake Up";
+
         decision.decision2.name = "10moreminutes";
         decision.decision2.text = "'10 More Minutes'";
       }
@@ -56,17 +85,14 @@ public class SphereOne : MonoBehaviour
         decision.decision2.name = "10moreminutes";
         decision.decision2.text = "'10 More Minutes'";
       }
-         }
-        
-   
-   public void nowPlaying(){
-        print(firstVideo.videoFile); 
     }
+    
+ 
     IEnumerator hideDecision(int i){
         
         yield return new WaitForSeconds(i);
          
-         decision.decision1.gameObject.SetActive(false);
+    decision.decision1.gameObject.SetActive(false);
     decision.decision2.gameObject.SetActive(false);   
     }
     
