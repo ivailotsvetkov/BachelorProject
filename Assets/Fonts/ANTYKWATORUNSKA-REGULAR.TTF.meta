@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: 630550242864ec24cb64bf181c068285
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Antykwa Torunska
+  fontNames:
+  - Antykwa Torunska
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 12d9ab875ffbd7d4bb1d6e72e211ccbd, type: 3}
+  - {fileID: 12800000, guid: 316832296da460f40b7f9f45bf63155a, type: 3}
+  - {fileID: 12800000, guid: 1d415eadf1647c34ab8bd00dc2e5c73a, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -5,21 +5,18 @@ using UnityEngine.UI;
 
 public class Score : MonoBehaviour
 {
-    public int maxInt = 100;
-    
     public Image intBar;
-    void Start()
-    {
-        
-    }
+    public Image healthBar;
+    public Image energyBar;
+ 
+    public static Score instance;
 
-    // Update is called once per frame
-    void Update()
+    void Awake()
     {
-        rightPath();
-    }   
-    void rightPath(){
-        Player.singleton.inteligence += 10;
-        intBar.fillAmount = (float)Player.singleton.inteligence / (float)maxInt;
+        if(instance == null)
+            instance = this;
+        else Destroy(this);
     }
+ 
+    
 }
