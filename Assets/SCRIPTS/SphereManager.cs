@@ -15,7 +15,7 @@ public class SphereManager : MonoBehaviour
     string decisionString;
     private float timerSpeed = 10f;
     private float elapsed;
-
+    private EventsOvermind<GameEvent> _eventsOvermind = new EventsOvermind<GameEvent>();
 
     // Update is called once per frame
     void Update()
@@ -97,16 +97,20 @@ public class SphereManager : MonoBehaviour
                  bars.SetActive(true);
                 break;
             case "TicTacToe":
-                SceneManager.LoadScene(decisionString);
+                 StartCoroutine(LoadYourAsyncScene());
+                 _eventsOvermind.Send(new ShowUINX_Window() { ID = "TicPlayMenu" });
                 break;    
             case "MemoryGame":
-                SceneManager.LoadScene("MemoryGame");
+                 StartCoroutine(LoadYourAsyncScene());
+                 _eventsOvermind.Send(new ShowUINX_Window() { ID = "MemoryPlayMenu" });
                 break;
             case "FindTheDifference":
-                SceneManager.LoadScene("FindTheDifference");
+                 StartCoroutine(LoadYourAsyncScene());
+                 _eventsOvermind.Send(new ShowUINX_Window() { ID = "SpotPlayMenu" });
                 break;
             case "Shooter":
-                SceneManager.LoadScene("Shooter");
+                 StartCoroutine(LoadYourAsyncScene());
+                 _eventsOvermind.Send(new ShowUINX_Window() { ID = "AsteroidPlayMenu" });
                 break;
             
             default:
@@ -116,7 +120,21 @@ public class SphereManager : MonoBehaviour
       
    
     }
-   
+   IEnumerator LoadYourAsyncScene()
+    {
+        // The Application loads the Scene in the background as the current Scene runs.
+        // This is particularly good for creating loading screens.
+        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
+        // a sceneBuildIndex of 1 as shown in Build Settings.
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Games");
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
     // need to put in Decisiions
     void changeDecisionName()
     {
