@@ -90,6 +90,7 @@ public class MemoryGameOvermind : AncestorBehaviour
                 }
                 GameWindow.ResultTxt.gameObject.SetActive(true);
                 GameWindow.ResultTxt.text = "You finished game in\n<color=red>" + (round/2) + "</color> rounds\nin <color=red>" + (Mathf.Round(gameTS * 100) / 100) + "</color> secs!";
+                //Add score here with round and seconds line 37 and 38
                 break;
         }
     }

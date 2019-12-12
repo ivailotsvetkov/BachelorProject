@@ -46,6 +46,7 @@ public class SpotGameOvermind : AncestorBehaviour
                 GameWindow.Buttons[1].ForceShow();
                 Sounds[3].Play();
                 GameWindow.ScoreTxt.text = "Nice!\nYour score is:\n<size=80><color=green>" + score + "</color> <color=white>/ "+Max_Score+"</color></size>";
+                //Add score using score and Max_Score lines 22 and 23
                 break;
         }
     }

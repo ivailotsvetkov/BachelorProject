@@ -99,6 +99,7 @@ public class AsteroidGameOvermind : AncestorBehaviour
                     }
                 }
                 ScoreWindow.ScoreTxt.text = "Congratulations!\nYour score is:\n<size=60><color=white>"+score+"</color></size>";
+                //Add score here with the score here with the score variable on line 19
                 break;
         }
     }

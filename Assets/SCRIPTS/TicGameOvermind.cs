@@ -340,7 +340,7 @@ public class TicGameOvermind : AncestorBehaviour
 
         if (!xWin && !oWin)
         {
-            //sprawdzam na ukos
+            
             if ((Fields[0][0] == EField.O && Fields[1][1] == EField.O && Fields[2][2] == EField.O)
                 || (Fields[2][0] == EField.O && Fields[1][1] == EField.O && Fields[0][2] == EField.O))
             {
@@ -365,6 +365,7 @@ public class TicGameOvermind : AncestorBehaviour
             if (playerIsX)
             {
                 print("You win!");
+                //Add score here
                 return 1;
             } else
             {
@@ -376,6 +377,7 @@ public class TicGameOvermind : AncestorBehaviour
             if (!playerIsX)
             {
                 print("You win!");
+                //Add score here
                 return 1;
             } else
             {
