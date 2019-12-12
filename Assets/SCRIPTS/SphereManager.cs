@@ -97,18 +97,22 @@ public class SphereManager : MonoBehaviour
                  bars.SetActive(true);
                 break;
             case "TicTacToe":
+                 print("TicTacToe");
                  StartCoroutine(LoadYourAsyncScene());
                  _eventsOvermind.Send(new ShowUINX_Window() { ID = "TicPlayMenu" });
                 break;    
             case "MemoryGame":
+                 print("MemoryGame");
                  StartCoroutine(LoadYourAsyncScene());
                  _eventsOvermind.Send(new ShowUINX_Window() { ID = "MemoryPlayMenu" });
                 break;
             case "FindTheDifference":
+                print("FindTheDifference");
                  StartCoroutine(LoadYourAsyncScene());
-                 _eventsOvermind.Send(new ShowUINX_Window() { ID = "SpotPlayMenu" });
+                EventsOvermind.Send(new ShowUINX_Window() { ID = "AsteroidPlayMenu" });
                 break;
             case "Shooter":
+                 print("Shooter");
                  StartCoroutine(LoadYourAsyncScene());
                  _eventsOvermind.Send(new ShowUINX_Window() { ID = "AsteroidPlayMenu" });
                 break;
@@ -128,12 +132,13 @@ public class SphereManager : MonoBehaviour
         // a sceneBuildIndex of 1 as shown in Build Settings.
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Games");
-
+        
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
+        
     }
     // need to put in Decisiions
     void changeDecisionName()
@@ -146,11 +151,22 @@ public class SphereManager : MonoBehaviour
             decision.decision2.name = "LetsDoThis";
             decision.decision2.text = "Lets Do This";
         }
+         if (firstVideo.videoFile == "TheExamDay2.mp4")
+        {
+            decision.decision1.name = "MentalChallengeYes";
+            decision.decision1.text = "Let's see this mental challenge";
 
+            decision.decision2.name = "MentalChallengeNo";
+            decision.decision2.text = "No i need to study?";
+        }
+        if (firstVideo.videoFile == "TheExamDayPlayNo.mp4" || firstVideo.videoFile == "TheExamDayPlayYes.mp4")
+        {
+            decision.decision1.name = "RockTheExam";
+            decision.decision1.text = "Rock The Exam";
 
-
-
-
+            decision.decision2.name = "SmashTheExam";
+            decision.decision2.text = "Smash The Exam";
+        }
 
 
 

@@ -50,6 +50,9 @@ public class Decision : MonoBehaviour
 
       theDecision.Add("IAmReady","TheExamDay2.mp4");
       theDecision.Add("LetsDoThis","TheExamDay2.mp4");
+      
+      theDecision.Add("MentalChallengeYes","MemoryGame");
+      theDecision.Add("MentalChallengeNo","TheExamDayPlayNo.mp4");
     }
       
 }

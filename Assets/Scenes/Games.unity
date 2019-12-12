@@ -1832,7 +1832,7 @@ PrefabInstance:
     - target: {fileID: 114407701872753310, guid: 2243c446e0f4e964386620a883f4c2a3,
         type: 3}
       propertyPath: DBG
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114407701872753310, guid: 2243c446e0f4e964386620a883f4c2a3,
         type: 3}

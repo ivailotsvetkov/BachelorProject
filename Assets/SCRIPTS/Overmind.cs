@@ -132,7 +132,7 @@ public class Overmind : MonoBehaviour
     {
         WindowsCanvas.Init();
         PlayerStation.SetUINXMode(true);
-        EventsOvermind.Send(new ShowUINX_Window() { ID = "SpotPlayMenu" });//change here fo example change id for MemoryPlayMenu or other play menu name
+        EventsOvermind.Send(new ShowUINX_Window() { ID = "AsteroidPlayMenu" });//change here fo example change id for MemoryPlayMenu or other play menu name
     }
 
     private void Update()
