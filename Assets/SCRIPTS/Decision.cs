@@ -12,20 +12,13 @@ public class Decision : MonoBehaviour
     
    
     public Dictionary<string,string> theDecision = new Dictionary<string,string>();
-    
-
+  
     // Start is called before the first frame update
     void Start()
     {
       addDecisions();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-      
-      
-    }
     void addDecisions(){
       theDecision.Add("WakeUp","WakeUpYes.mp4");
       theDecision.Add("10moreminutes","WakeUpNo.mp4");
@@ -48,7 +41,7 @@ public class Decision : MonoBehaviour
        theDecision.Add("Sleeping","LetsPlayTicTacToe.mp4");
       theDecision.Add("Studying","LetsPlayTicTacToe.mp4");
 
-      theDecision.Add("IAmReady","TheExamDay2.mp4");
+      theDecision.Add("IAmReady","TicTacToe");
       theDecision.Add("LetsDoThis","TheExamDay2.mp4");
       
       theDecision.Add("MentalChallengeYes","MemoryGame");

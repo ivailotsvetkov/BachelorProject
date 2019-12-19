@@ -35,9 +35,9 @@ public class UINX_WindowsCanvas : AncestorBehaviour
     public override void Init(AncestorBehaviourInitData initData = null)
     {
         base.Init(initData);
-        Overmind.EventsOvermind.AddListener<ShowUINX_Window>(OnShowUINX_Window);
-        Overmind.EventsOvermind.AddListener<HideUINX_Window>(OnHideUINX_Window);
-        Overmind.EventsOvermind.AddListener<AssignCameraToCanvas>(OnAssignCameraToCanvas);
+        Overmind.EventsManager.AddListener<ShowUINX_Window>(OnShowUINX_Window);
+        Overmind.EventsManager.AddListener<HideUINX_Window>(OnHideUINX_Window);
+        Overmind.EventsManager.AddListener<AssignCameraToCanvas>(OnAssignCameraToCanvas);
         if (MyAnchor != null)
         {
             var comp = GetComponent<RectTransform>();
@@ -51,22 +51,22 @@ public class UINX_WindowsCanvas : AncestorBehaviour
     {
         IsInitialized = false;
         HideWindows();
-        Overmind.EventsOvermind.AddListener<ShowUINX_Window>(OnShowUINX_Window);
-        Overmind.EventsOvermind.AddListener<HideUINX_Window>(OnHideUINX_Window);
-        Overmind.EventsOvermind.AddListener<AssignCameraToCanvas>(OnAssignCameraToCanvas);
+        Overmind.EventsManager.AddListener<ShowUINX_Window>(OnShowUINX_Window);
+        Overmind.EventsManager.AddListener<HideUINX_Window>(OnHideUINX_Window);
+        Overmind.EventsManager.AddListener<AssignCameraToCanvas>(OnAssignCameraToCanvas);
     }
     public override void BeforeDestroy()
     {
         base.BeforeDestroy();
-        Overmind.EventsOvermind.RemoveListener<ShowUINX_Window>(OnShowUINX_Window);
-        Overmind.EventsOvermind.RemoveListener<HideUINX_Window>(OnHideUINX_Window);
-        Overmind.EventsOvermind.RemoveListener<AssignCameraToCanvas>(OnAssignCameraToCanvas);
+        Overmind.EventsManager.RemoveListener<ShowUINX_Window>(OnShowUINX_Window);
+        Overmind.EventsManager.RemoveListener<HideUINX_Window>(OnHideUINX_Window);
+        Overmind.EventsManager.RemoveListener<AssignCameraToCanvas>(OnAssignCameraToCanvas);
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        if (Overmind.EventsOvermind != null)
+        if (Overmind.EventsManager != null)
         {
             BeforeDestroy();
         }

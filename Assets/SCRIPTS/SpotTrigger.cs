@@ -20,12 +20,12 @@ public class SpotTrigger : AncestorBehaviour
         {
             if (!Found)
             {
-                Overmind.EventsOvermind.Send(new SpotEvent() { Success = true, Pos = transform.position });
+                Overmind.EventsManager.Send(new SpotEvent() { Success = true, Pos = transform.position });
                 Found = true;
             }
         } else
         {
-            Overmind.EventsOvermind.Send(new SpotEvent() { Success = false });
+            Overmind.EventsManager.Send(new SpotEvent() { Success = false });
         }
     }
 }

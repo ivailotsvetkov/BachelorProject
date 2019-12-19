@@ -67,36 +67,36 @@ public class UINX_TicTacToe : UINX_Window
 
     protected virtual void OnFieldButton(UINX_Button button)
     {
-        Overmind.TicGameOvermind.Sounds[2].Play();
+        Overmind.TicGameManager.Sounds[2].Play();
         var classic = (button as UINX_ButtonClassic);
         button.Hide();
-        if (Overmind.TicGameOvermind.playerIsX)
+        if (Overmind.TicGameManager.playerIsX)
         {
-            Overmind.TicGameOvermind.Fields[classic.gameX][classic.gameY] = EField.X;
-            var x = Instantiate(Overmind.TicGameOvermind.XPrefab, transform);
+            Overmind.TicGameManager.Fields[classic.gameX][classic.gameY] = EField.X;
+            var x = Instantiate(Overmind.TicGameManager.XPrefab, transform);
             x.transform.position = classic.transform.position;
             x.transform.rotation = classic.transform.rotation;
             figures.Add(x);
         } else
         {
-            Overmind.TicGameOvermind.Fields[classic.gameX][classic.gameY] = EField.O;
-            var o = Instantiate(Overmind.TicGameOvermind.OPrefab, transform);
+            Overmind.TicGameManager.Fields[classic.gameX][classic.gameY] = EField.O;
+            var o = Instantiate(Overmind.TicGameManager.OPrefab, transform);
             o.transform.position = classic.transform.position;
             o.transform.rotation = classic.transform.rotation;
             figures.Add(o);
         }
-        Overmind.TicGameOvermind.NextState();
+        Overmind.TicGameManager.NextState();
     }
     protected virtual void OnReturnButton(UINX_Button button)
     {
-        Overmind.TicGameOvermind.Sounds[1].Play();
-        if (Overmind.TicGameOvermind.GameState == ETicGameState.Win)
+        Overmind.TicGameManager.Sounds[1].Play();
+        if (Overmind.TicGameManager.GameState == ETicGameState.Win)
         {
-            Overmind.EventsOvermind.Send(new HideUINX_Window() { HideAll = true } );
+            Overmind.EventsManager.Send(new HideUINX_Window() { HideAll = true } );
             Overmind.PlayerStation.SetUINXMode(false);
         } else
         {
-            Overmind.EventsOvermind.Send(new ShowUINX_Window() { ID = "TicPlayMenu" });
+            Overmind.EventsManager.Send(new ShowUINX_Window() { ID = "TicPlayMenu" });
         }
         for (int i = 0; i < figures.Count; ++i)
         {

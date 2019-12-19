@@ -51,7 +51,7 @@ public class UINX_ConfirmPopup : UINX_Window
         {
             NoAddAction();
         }
-        Overmind.EventsOvermind.Send(new HideUINX_Window() { Window = this});
+        Overmind.EventsManager.Send(new HideUINX_Window() { Window = this});
     }
 
     public override void SetupWindow(AncestorBehaviourInitData initData = null)

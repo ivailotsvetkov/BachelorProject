@@ -46,7 +46,7 @@ public class UINX_Spot : UINX_Window
     {
         base.Show(initData);
         drawed.Clear();
-        Overmind.EventsOvermind.AddListener<SpotEvent>(OnSpotEvent);
+        Overmind.EventsManager.AddListener<SpotEvent>(OnSpotEvent);
         RefreshStateTxt();
         NextPicture();
         StateTxt.gameObject.SetActive(true);
@@ -58,24 +58,24 @@ public class UINX_Spot : UINX_Window
     public override void Hide()
     {
         base.Hide();
-        Overmind.EventsOvermind.RemoveListener<SpotEvent>(OnSpotEvent);
+        Overmind.EventsManager.RemoveListener<SpotEvent>(OnSpotEvent);
     }
 
     protected virtual void OnReturnButton(UINX_Button button)
     {
-        Overmind.SpotGameOvermind.Sounds[1].Play();
+        Overmind.SpotGameManager.Sounds[1].Play();
         Overmind.GetInstance.SetGame(EGames.TicTackToe);
-        Overmind.EventsOvermind.Send(new HideUINX_Window() { HideAll = true } );
+        Overmind.EventsManager.Send(new HideUINX_Window() { HideAll = true } );
         Overmind.PlayerStation.SetUINXMode(false);
     }
 
     protected virtual void OnNoButton(UINX_Button button)
     {
-        Overmind.SpotGameOvermind.Sounds[0].Play();
+        Overmind.SpotGameManager.Sounds[0].Play();
         if (Picture.Differences == 0)
         {
-            ++Overmind.SpotGameOvermind.score;
-            Overmind.SpotGameOvermind.Sounds[2].Play();
+            ++Overmind.SpotGameManager.score;
+            Overmind.SpotGameManager.Sounds[2].Play();
         }
         NextPicture();
     }
@@ -123,12 +123,12 @@ public class UINX_Spot : UINX_Window
     {
         if (e.Success)
         {
-            Overmind.SpotGameOvermind.Sounds[2].Play();
+            Overmind.SpotGameManager.Sounds[2].Play();
             Good.transform.position = e.Pos;
             goodTS = 0;
             Good.transform.localScale = Good_Origin_Scale;
             Good.gameObject.SetActive(true);
-            ++Overmind.SpotGameOvermind.score;
+            ++Overmind.SpotGameManager.score;
             ++foundDiffs;
             if (foundDiffs >= Picture.Differences)
             {
@@ -136,7 +136,7 @@ public class UINX_Spot : UINX_Window
             }
         } else
         {
-            Overmind.SpotGameOvermind.Sounds[5].Play();
+            Overmind.SpotGameManager.Sounds[5].Play();
             badState = 1;
             Bad.localScale = Bad_Origin_Scale;
             badTS = 0;
@@ -152,17 +152,17 @@ public class UINX_Spot : UINX_Window
 
     void NextPicture()
     {
-        ++Overmind.SpotGameOvermind.Current_Picture;
+        ++Overmind.SpotGameManager.Current_Picture;
         if (Picture != null)
         {
             Destroy(Picture.gameObject);
             Picture = null;
         }
-        if (Overmind.SpotGameOvermind.Current_Picture >= Overmind.SpotGameOvermind.Pictures_To_Spot)
+        if (Overmind.SpotGameManager.Current_Picture >= Overmind.SpotGameManager.Pictures_To_Spot)
         {
             StateTxt.gameObject.SetActive(false);
             ScoreTxt.gameObject.SetActive(true);
-            Overmind.SpotGameOvermind.SetGameState(ESpotGameState.Win);
+            Overmind.SpotGameManager.SetGameState(ESpotGameState.Win);
         } else
         {
             int r = Random.Range(0, PicturePrefabs.Count);
@@ -174,7 +174,7 @@ public class UINX_Spot : UINX_Window
             Picture = Instantiate(PicturePrefabs[r], PictureRoot).GetComponent<SpotPicture>();
             chances = 2;
             foundDiffs = 0;
-            Overmind.SpotGameOvermind.Max_Score += Picture.Differences == 0 ? 1 : Picture.Differences;
+            Overmind.SpotGameManager.Max_Score += Picture.Differences == 0 ? 1 : Picture.Differences;
         }
         RefreshStateTxt();
     }

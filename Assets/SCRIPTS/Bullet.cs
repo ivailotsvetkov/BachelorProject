@@ -65,7 +65,7 @@ public class Bullet : AncestorBehaviour
             raycastHits[i].collider.transform.parent.GetComponent<Asteroid>().Annihilate();
             canDestroy = false;
             Rend.enabled = false;
-            ++Overmind.AsteroidGameOvermind.score;
+            ++Overmind.AsteroidGameManager.score;
             break;
         }
     }

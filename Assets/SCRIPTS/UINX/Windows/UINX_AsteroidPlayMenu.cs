@@ -15,9 +15,9 @@ public class UINX_AsteroidPlayMenu : UINX_Window
     protected virtual void OnPlayButton(UINX_Button button)
     {
         button.Hide();
-        Overmind.AsteroidGameOvermind.Sounds[0].Play();
-        Overmind.AsteroidGameOvermind.SetGameState(EAsteroidGameState.Tutorial);
-        Overmind.EventsOvermind.Send(new ShowUINX_Window() { ID = "Tutorial" });
+        Overmind.AsteroidGameManager.Sounds[0].Play();
+        Overmind.AsteroidGameManager.SetGameState(EAsteroidGameState.Tutorial);
+        Overmind.EventsManager.Send(new ShowUINX_Window() { ID = "Tutorial" });
     }
     public override void Show(AncestorBehaviourInitData initData = null)
     {

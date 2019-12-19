@@ -25,17 +25,23 @@ public class Overmind : MonoBehaviour
     public static List<AncestorBehaviour> AncestorsToUpdate = new List<AncestorBehaviour>();
     public static List<AncestorBehaviour> AncestorsToLateUpdate = new List<AncestorBehaviour>();
     public static List<AncestorBehaviour> AncestorsToFixedUpdate = new List<AncestorBehaviour>();
-
     public static List<AncestorBehaviour> AncestorsBeforeDestroy = new List<AncestorBehaviour>();
 
-    private EventsOvermind<GameEvent> _eventsOvermind = new EventsOvermind<GameEvent>();
+    public TicGameManager _ticGameManager;
+    public AsteroidGameManager _asteroidGameManager;
+    public MemoryGameManager _memoryGameManager;
+    public SpotGameManager _spotGameManager;
+    private EventsManager<GameEvent> __EventsManager = new EventsManager<GameEvent>();
 
     public PlayerStation _playerStation = null;
-    public static PlayerStation PlayerStation { get { return GetInstance._playerStation; } private set { GetInstance._playerStation = value; } }
-
+    
     public UINX_WindowsCanvas WindowsCanvas;
 
     public EGames CurrentGame = EGames.TicTackToe;
+
+    public SphereManager _sphereManager;
+    
+
     public void SetGame(EGames Game)
     {
         switch(Game)
@@ -56,51 +62,69 @@ public class Overmind : MonoBehaviour
         PlayerStation.SetColors(Game);
         CurrentGame = Game;
     }
-    public TicGameOvermind _ticGameOvermind;
-    public static TicGameOvermind TicGameOvermind
+
+    public static PlayerStation PlayerStation 
+    { 
+        get 
+        { 
+        return GetInstance._playerStation; 
+        } 
+        private set { 
+                        GetInstance._playerStation = value; 
+                    }
+    }
+
+    public static TicGameManager TicGameManager
     {
         get
         {
-            return GetInstance._ticGameOvermind;
+            return GetInstance._ticGameManager;
         }
     }
 
-    public AsteroidGameOvermind _asteroidGameOvermind;
-    public static AsteroidGameOvermind AsteroidGameOvermind
+    public static SphereManager SphereManager 
+    { 
+        get 
+        { 
+            return GetInstance._sphereManager;
+        }
+    }
+    
+    public static AsteroidGameManager AsteroidGameManager
     {
         get
         {
-            return GetInstance._asteroidGameOvermind;
+            return GetInstance._asteroidGameManager;
         }
     }
 
-    public MemoryGameOvermind _memoryGameOvermind;
-    public static MemoryGameOvermind MemoryGameOvermind
+    
+    public static MemoryGameManager MemoryGameManager
     {
         get
         {
-            return GetInstance._memoryGameOvermind;
+            return GetInstance._memoryGameManager;
         }
     }
 
-    public SpotGameOvermind _spotGameOvermind;
-    public static SpotGameOvermind SpotGameOvermind
+    
+    public static SpotGameManager SpotGameManager
     {
         get
         {
-            return GetInstance._spotGameOvermind;
+            return GetInstance._spotGameManager;
         }
     }
 
 
-    public static EventsOvermind<GameEvent> EventsOvermind
+    public static EventsManager<GameEvent> EventsManager
     {
         get
         {
             var i = GetInstance;
             if (i != null)
             {
-                return GetInstance._eventsOvermind;
+                return GetInstance.__EventsManager;
             }
             return null;
         }
@@ -131,8 +155,8 @@ public class Overmind : MonoBehaviour
     private void Awake()
     {
         WindowsCanvas.Init();
-        PlayerStation.SetUINXMode(true);
-        EventsOvermind.Send(new ShowUINX_Window() { ID = "AsteroidPlayMenu" });//change here fo example change id for MemoryPlayMenu or other play menu name
+        PlayerStation.HandVisible(false);
+        PlayerStation.SwitchPositionToVideo();
     }
 
     private void Update()

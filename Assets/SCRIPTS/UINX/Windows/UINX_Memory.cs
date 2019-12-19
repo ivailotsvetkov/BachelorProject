@@ -66,7 +66,7 @@ public class UINX_Memory : UINX_Window
     public override void Init(AncestorBehaviourInitData initData = null)
     {
         int i = 1;
-        switch (Overmind.MemoryGameOvermind.GameDifficulty)
+        switch (Overmind.MemoryGameManager.GameDifficulty)
         {
             case EGame.Easy:
                 for (int j = 0; j < EasySetup.childCount; ++j, ++i)
@@ -102,7 +102,7 @@ public class UINX_Memory : UINX_Window
         int i = 1;
         if (IsInitialized)
         {
-            switch (Overmind.MemoryGameOvermind.GameDifficulty)
+            switch (Overmind.MemoryGameManager.GameDifficulty)
             {
                 case EGame.Easy:
                     for (int j = 0; j < EasySetup.childCount; ++j, ++i)
@@ -142,14 +142,14 @@ public class UINX_Memory : UINX_Window
         {
             Buttons[i].transform.localEulerAngles = Show_Rotation;
         }
-        switch (Overmind.MemoryGameOvermind.GameDifficulty)
+        switch (Overmind.MemoryGameManager.GameDifficulty)
         {
             case EGame.Easy:
                 for (int j = 0; j < EasySetup.childCount; ++j)
                 {
                     var ubc = (Buttons[j + 1] as UINX_ButtonClassic);
-                    ubc.DigitTxt.text = Overmind.MemoryGameOvermind.Memories[j].ToString();
-                    ubc.DigitTxt.color = DigitColors[Overmind.MemoryGameOvermind.Memories[j]];
+                    ubc.DigitTxt.text = Overmind.MemoryGameManager.Memories[j].ToString();
+                    ubc.DigitTxt.color = DigitColors[Overmind.MemoryGameManager.Memories[j]];
                     ubc.Nr = j+1;
                 }
                 break;
@@ -157,8 +157,8 @@ public class UINX_Memory : UINX_Window
                 for (int j = 0; j < MediumSetup.childCount; ++j)
                 {
                     var ubc = (Buttons[j + 1] as UINX_ButtonClassic);
-                    ubc.DigitTxt.text = Overmind.MemoryGameOvermind.Memories[j].ToString();
-                    ubc.DigitTxt.color = DigitColors[Overmind.MemoryGameOvermind.Memories[j]];
+                    ubc.DigitTxt.text = Overmind.MemoryGameManager.Memories[j].ToString();
+                    ubc.DigitTxt.color = DigitColors[Overmind.MemoryGameManager.Memories[j]];
                     ubc.Nr = j+1;
                 }
                 break;
@@ -166,8 +166,8 @@ public class UINX_Memory : UINX_Window
                 for (int j = 0; j < HardSetup.childCount; ++j)
                 {
                     var ubc = (Buttons[j + 1] as UINX_ButtonClassic);
-                    ubc.DigitTxt.text = Overmind.MemoryGameOvermind.Memories[j].ToString();
-                    ubc.DigitTxt.color = DigitColors[Overmind.MemoryGameOvermind.Memories[j]];
+                    ubc.DigitTxt.text = Overmind.MemoryGameManager.Memories[j].ToString();
+                    ubc.DigitTxt.color = DigitColors[Overmind.MemoryGameManager.Memories[j]];
                     ubc.Nr = j+1;
                 }
                 break;
@@ -183,29 +183,32 @@ public class UINX_Memory : UINX_Window
     {
         button.ForceShow();
         button.SetDisabled();
-        Overmind.MemoryGameOvermind.Sounds[2].Play();
+        Overmind.MemoryGameManager.Sounds[2].Play();
         var classic = (button as UINX_ButtonClassic);
         toRotate.Add(classic.Nr);
         toRotateTS.Add(0);
-        ++Overmind.MemoryGameOvermind.round;
+        ++Overmind.MemoryGameManager.round;
         RefreshStateTxt();
-        if (Overmind.MemoryGameOvermind.round % 2 == 0)
+        if (Overmind.MemoryGameManager.round % 2 == 0)
         {
             roundTS = 0;
         }
-        Overmind.MemoryGameOvermind.NextState();
+        Overmind.MemoryGameManager.NextState();
     }
 
     protected virtual void OnReturnButton(UINX_Button button)
     {
-        Overmind.MemoryGameOvermind.Sounds[1].Play();
-        Overmind.EventsOvermind.Send(new HideUINX_Window() { HideAll = true } );
+        Overmind.MemoryGameManager.Sounds[1].Play();
+        Overmind.EventsManager.Send(new HideUINX_Window() { HideAll = true } );
         Overmind.PlayerStation.SetUINXMode(false);
         for (int i = 0; i < figures.Count; ++i)
         {
             Destroy(figures[i]);
         }
         figures.Clear();
+        Overmind.PlayerStation.SwitchPositionToVideo();
+        Overmind.SphereManager.firstVideo.targetSurface.GetComponent<Renderer>().enabled = true;
+        Overmind.SphereManager.PlayVideo("TheExamDayPlayNo.mp4");
     }
 
     public bool NextDrawLetter()
@@ -229,13 +232,13 @@ public class UINX_Memory : UINX_Window
         if (firstTime)
         {
             rotTS += Time.deltaTime;
-            if (Overmind.MemoryGameOvermind.GameState == EMemoryGameState.ShowTime)
+            if (Overmind.MemoryGameManager.GameState == EMemoryGameState.ShowTime)
             {
                 StateTxt.text = "Remember it!\nHidding in <color=red>" + Mathf.Round(Show_Time - rotTS) + "</color> sec!";
                 if (rotTS >= Show_Time)
                 {
-                    Overmind.MemoryGameOvermind.Sounds[2].Play();
-                    Overmind.MemoryGameOvermind.NextState();
+                    Overmind.MemoryGameManager.Sounds[2].Play();
+                    Overmind.MemoryGameManager.NextState();
                     StateTxt.text = "Hidding!";
                     rotTS = 0;
                 }
@@ -254,14 +257,14 @@ public class UINX_Memory : UINX_Window
             }
         } else
         {
-            if (Overmind.MemoryGameOvermind.GameState != EMemoryGameState.Lose && Overmind.MemoryGameOvermind.GameState != EMemoryGameState.Win)
+            if (Overmind.MemoryGameManager.GameState != EMemoryGameState.Lose && Overmind.MemoryGameManager.GameState != EMemoryGameState.Win)
             {
                 roundTS += Time.deltaTime;
-                Overmind.MemoryGameOvermind.gameTS += Time.deltaTime;
+                Overmind.MemoryGameManager.gameTS += Time.deltaTime;
                 RefreshStateTxt();
-                if (roundTS >= Overmind.MemoryGameOvermind.Round_Time)
+                if (roundTS >= Overmind.MemoryGameManager.Round_Time)
                 {
-                    ++Overmind.MemoryGameOvermind.round;
+                    ++Overmind.MemoryGameManager.round;
                     roundTS = 0;
                 }
             }
@@ -283,10 +286,10 @@ public class UINX_Memory : UINX_Window
             }
             if (endlings == 2)
             {
-                if (Overmind.MemoryGameOvermind.Memories[toRotate[1] - 1] == Overmind.MemoryGameOvermind.Memories[toRotate[0] - 1])
+                if (Overmind.MemoryGameManager.Memories[toRotate[1] - 1] == Overmind.MemoryGameManager.Memories[toRotate[0] - 1])
                 {
-                    Overmind.MemoryGameOvermind.Sounds[4].Play();
-                    ++Overmind.MemoryGameOvermind.score;
+                    Overmind.MemoryGameManager.Sounds[4].Play();
+                    ++Overmind.MemoryGameManager.score;
                     Buttons[toRotate[0]].Hide();
                     Buttons[toRotate[1]].Hide();
                     particles[0].transform.position = Buttons[toRotate[0]].transform.position + Particles_Offset;
@@ -296,7 +299,7 @@ public class UINX_Memory : UINX_Window
                     particles[0].SetActive(true);
                     particles[1].SetActive(true);
                     RefreshStateTxt();
-                    Overmind.MemoryGameOvermind.NextState();
+                    Overmind.MemoryGameManager.NextState();
                 } else
                 {
                     toRewind.Add(toRotate[0]);
@@ -335,16 +338,16 @@ public class UINX_Memory : UINX_Window
 
     void RefreshStateTxt()
     {
-        switch (Overmind.MemoryGameOvermind.GameDifficulty)
+        switch (Overmind.MemoryGameManager.GameDifficulty)
         {
             case EGame.Easy:
-                StateTxt.text = Overmind.MemoryGameOvermind.score + " / " + (EasySetup.childCount / 2)+ "\nRound [" +(Overmind.MemoryGameOvermind.round / 2)+ "]\nTime left: <color=red>" + Mathf.Round(Overmind.MemoryGameOvermind.Round_Time - roundTS)+"</color>s";
+                StateTxt.text = Overmind.MemoryGameManager.score + " / " + (EasySetup.childCount / 2)+ "\nRound [" +(Overmind.MemoryGameManager.round / 2)+ "]\nTime left: <color=red>" + Mathf.Round(Overmind.MemoryGameManager.Round_Time - roundTS)+"</color>s";
                 break;
             case EGame.Medium:
-                StateTxt.text = Overmind.MemoryGameOvermind.score + " / " + (MediumSetup.childCount / 2)+ "\nRound [" +(Overmind.MemoryGameOvermind.round / 2)+ "]\nTime left: <color=red>" + Mathf.Round(Overmind.MemoryGameOvermind.Round_Time - roundTS) + "</color>s";
+                StateTxt.text = Overmind.MemoryGameManager.score + " / " + (MediumSetup.childCount / 2)+ "\nRound [" +(Overmind.MemoryGameManager.round / 2)+ "]\nTime left: <color=red>" + Mathf.Round(Overmind.MemoryGameManager.Round_Time - roundTS) + "</color>s";
                 break;
             case EGame.Hard:
-                StateTxt.text = Overmind.MemoryGameOvermind.score + " / " + (HardSetup.childCount / 2)+ "\nRound [" +(Overmind.MemoryGameOvermind.round / 2)+ "]\nTime left: <color=red>" + Mathf.Round(Overmind.MemoryGameOvermind.Round_Time - roundTS) + "</color>s";
+                StateTxt.text = Overmind.MemoryGameManager.score + " / " + (HardSetup.childCount / 2)+ "\nRound [" +(Overmind.MemoryGameManager.round / 2)+ "]\nTime left: <color=red>" + Mathf.Round(Overmind.MemoryGameManager.Round_Time - roundTS) + "</color>s";
                 break;
         }
     }

@@ -21,8 +21,8 @@ public class UINX_SpotPlayMenu : UINX_Window
     protected virtual void OnPlayButton(UINX_Button button)
     {
         button.Hide();
-        Overmind.SpotGameOvermind.NewGame();
-        Overmind.SpotGameOvermind.Sounds[0].Play();
-        Overmind.EventsOvermind.Send(new ShowUINX_Window() { ID = "Spot" });
+        Overmind.SpotGameManager.NewGame();
+        Overmind.SpotGameManager.Sounds[0].Play();
+        Overmind.EventsManager.Send(new ShowUINX_Window() { ID = "Spot" });
     }
 }

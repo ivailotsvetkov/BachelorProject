@@ -16,7 +16,7 @@ public class Asteroid : AncestorBehaviour
 
     public void Spawn(Vector3 position, float Speed, float Life_Time, AudioClip clip = null)
     {
-        transform.localScale = Overmind.AsteroidGameOvermind.Asteroid_Spawn_Scale;
+        transform.localScale = Overmind.AsteroidGameManager.Asteroid_Spawn_Scale;
         isFree = false;
         transform.position = position;
         transform.LookAt(Overmind.PlayerStation.MainCamera.transform);
@@ -25,7 +25,7 @@ public class Asteroid : AncestorBehaviour
         this.Life_Time = Life_Time;
         velocity = transform.forward.normalized * Speed;
         gameObject.SetActive(true);
-        Rotation_Speed = Overmind.AsteroidGameOvermind.Asteroid_Rotation_Speed;
+        Rotation_Speed = Overmind.AsteroidGameManager.Asteroid_Rotation_Speed;
         Rotation_Axis = new Vector3(Random.Range(-1, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
     }
 
@@ -48,7 +48,7 @@ public class Asteroid : AncestorBehaviour
 
     public void Annihilate()
     {
-        Overmind.AsteroidGameOvermind.SpawnExplosion(transform.position);
+        Overmind.AsteroidGameManager.SpawnExplosion(transform.position);
         isFree = true;
         gameObject.SetActive(false);
     }

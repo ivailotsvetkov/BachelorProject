@@ -55,9 +55,9 @@ public class UINXController : AncestorBehaviour
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        if (Overmind.EventsOvermind != null)
+        if (Overmind.EventsManager != null)
         {
-            Overmind.EventsOvermind.RemoveListener<UIRaycastStateEvent>(OnUIRaycastStateEvent);
+            Overmind.EventsManager.RemoveListener<UIRaycastStateEvent>(OnUIRaycastStateEvent);
         }
     }
 

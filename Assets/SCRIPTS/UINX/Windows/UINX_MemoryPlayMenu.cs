@@ -21,32 +21,26 @@ public class UINX_MemoryPlayMenu : UINX_Window
         Buttons[1].ForceShow();
         Buttons[2].ForceShow();
         Buttons[3].ForceShow();
-        Overmind.MemoryGameOvermind.Sounds[0].Play();
+        Overmind.MemoryGameManager.Sounds[0].Play();
     }
 
-    protected virtual void OnExitButton(UINX_Button button)
-    {
-        Hide();
-        //Overmind.PlayerStation.ScreenFade.SetFadeIn(() => { Application.Quit(); });
-        Overmind.MemoryGameOvermind.Sounds[1].Play();
-    }
     protected virtual void OnPlayEasyButton(UINX_Button button)
     {
-        Overmind.MemoryGameOvermind.NewGame(EGame.Easy);
-        Overmind.EventsOvermind.Send(new ShowUINX_Window() { ID = "Memory" });
-        Overmind.MemoryGameOvermind.Sounds[0].Play();
+        Overmind.MemoryGameManager.NewGame(EGame.Easy);
+        Overmind.EventsManager.Send(new ShowUINX_Window() { ID = "Memory" });
+        Overmind.MemoryGameManager.Sounds[0].Play();
     }
     protected virtual void OnPlayMediumButton(UINX_Button button)
     {
-        Overmind.MemoryGameOvermind.NewGame(EGame.Medium);
-        Overmind.EventsOvermind.Send(new ShowUINX_Window() { ID = "Memory" });
-        Overmind.MemoryGameOvermind.Sounds[0].Play();
+        Overmind.MemoryGameManager.NewGame(EGame.Medium);
+        Overmind.EventsManager.Send(new ShowUINX_Window() { ID = "Memory" });
+        Overmind.MemoryGameManager.Sounds[0].Play();
     }
     protected virtual void OnPlayHardButton(UINX_Button button)
     {
-        Overmind.MemoryGameOvermind.NewGame(EGame.Hard);
-        Overmind.EventsOvermind.Send(new ShowUINX_Window() { ID = "Memory" });
-        Overmind.MemoryGameOvermind.Sounds[0].Play();
+        Overmind.MemoryGameManager.NewGame(EGame.Hard);
+        Overmind.EventsManager.Send(new ShowUINX_Window() { ID = "Memory" });
+        Overmind.MemoryGameManager.Sounds[0].Play();
     }
 
     public override void Show(AncestorBehaviourInitData initData = null)

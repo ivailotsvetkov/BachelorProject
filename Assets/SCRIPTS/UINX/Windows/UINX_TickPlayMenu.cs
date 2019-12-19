@@ -21,14 +21,14 @@ public class UINX_TickPlayMenu : UINX_Window
 
     protected virtual void OnPlayOButton(UINX_Button button)
     {
-        Overmind.EventsOvermind.Send(new ShowUINX_Window() { ID = "TicTacToe" });
-        Overmind.TicGameOvermind.NewGame(false);
-        Overmind.TicGameOvermind.Sounds[0].Play();
+        Overmind.EventsManager.Send(new ShowUINX_Window() { ID = "TicTacToe" });
+        Overmind.TicGameManager.NewGame(false);
+        Overmind.TicGameManager.Sounds[0].Play();
     }
     protected virtual void OnPlayXButton(UINX_Button button)
     {
-        Overmind.EventsOvermind.Send(new ShowUINX_Window() { ID = "TicTacToe" });
-        Overmind.TicGameOvermind.NewGame(true);
-        Overmind.TicGameOvermind.Sounds[0].Play();
+        Overmind.EventsManager.Send(new ShowUINX_Window() { ID = "TicTacToe" });
+        Overmind.TicGameManager.NewGame(true);
+        Overmind.TicGameManager.Sounds[0].Play();
     }
 }

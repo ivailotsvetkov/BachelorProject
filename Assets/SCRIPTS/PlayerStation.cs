@@ -29,12 +29,38 @@ public class PlayerStation : AncestorBehaviour
     public List<Bullet> bullets = new List<Bullet>();
     public AudioClip[] BulletSoundClips = new AudioClip[3];
 
+    [Header("=RIGS=")]
+
+    public Vector3 gameRig;
+    public Transform videoRig;
+
+
     [Header("=UINX=")]
     public GameObject UINXControllerPrefab;
     public Transform UINXSlot;
     public Transform AsteroidUINXSlot;
     public UINXController UINXController;
     public bool UINXMode = false;
+    bool firstTime = true;
+    private void Awake()
+    {
+        
+    }
+
+    public void SwitchPositionToVideo()
+    {
+        if (firstTime)
+        {
+            gameRig = transform.position;
+            firstTime = false;
+        }
+        transform.position = videoRig.position;
+    }
+
+    public void SwitchPositionToGame()
+    {
+        transform.position = gameRig;
+    }
 
     public void SwitchAsteroidMode(bool state)
     {
@@ -65,6 +91,7 @@ public class PlayerStation : AncestorBehaviour
         //Hands[1].uiMode = state;
         //Hands[1].SetGrabState(state ? EGrabType.UIMode : EGrabType.None);
         UINXController.gameObject.SetActive(state);
+        HandVisible(state);
     }
 
     public override void Ancestor_Update()
@@ -97,12 +124,12 @@ public class PlayerStation : AncestorBehaviour
                 }
             }
         }
-        if (Overmind.AsteroidGameOvermind.GameState == EAsteroidGameState.Loop || Overmind.AsteroidGameOvermind.GameState == EAsteroidGameState.Tutorial)
+        if (Overmind.AsteroidGameManager.GameState == EAsteroidGameState.Loop || Overmind.AsteroidGameManager.GameState == EAsteroidGameState.Tutorial)
         {
             if (Input.GetKeyDown(KeyCode.B) || OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger))
             {
                 Fire();
-            }
+           }
         }
     }
 
@@ -114,19 +141,36 @@ public class PlayerStation : AncestorBehaviour
         {
             if (bullets[i].isFree)
             {
-                bullets[i].Spawn(FirePoint.position, FirePoint.rotation, Overmind.AsteroidGameOvermind.Bullet_Speed, Overmind.AsteroidGameOvermind.Bullet_LifeTime);
+                bullets[i].Spawn(FirePoint.position, FirePoint.rotation, Overmind.AsteroidGameManager.Bullet_Speed, Overmind.AsteroidGameManager.Bullet_LifeTime);
                 found = true;
                 break;
             }
         }
         if (!found)
         {
-            var b = Instantiate(BulletPrefab, Overmind.AsteroidGameOvermind.Bullets_Root).GetComponent<Bullet>();
-            b.Spawn(FirePoint.position, FirePoint.rotation, Overmind.AsteroidGameOvermind.Bullet_Speed, Overmind.AsteroidGameOvermind.Bullet_LifeTime, BulletSoundClips[Random.Range(0, BulletSoundClips.Length)]);
+            var b = Instantiate(BulletPrefab, Overmind.AsteroidGameManager.Bullets_Root).GetComponent<Bullet>();
+            b.Spawn(FirePoint.position, FirePoint.rotation, Overmind.AsteroidGameManager.Bullet_Speed, Overmind.AsteroidGameManager.Bullet_LifeTime, BulletSoundClips[Random.Range(0, BulletSoundClips.Length)]);
             bullets.Add(b);
         }
     }
-
+    public void HandVisible(bool flag)
+    {
+        if (flag)
+        {
+            if (UINXController == null || UINXController.transform.parent == UINXSlot)
+            {
+                DefaultHandRend.enabled = true;
+                AsteroidHand.SetActive(false);
+            } else if (UINXController.transform.parent = AsteroidUINXSlot)
+            {
+                AsteroidHand.SetActive(true);
+                DefaultHandRend.enabled = false;
+            }
+        } else {
+            DefaultHandRend.enabled = false;
+            AsteroidHand.SetActive(false);
+        }
+    }
     public void SetColors(EGames Game)
     {
         DefaultHandRend.material = HandMaterials[(int)Game];

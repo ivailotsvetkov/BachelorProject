@@ -47,7 +47,7 @@ public class UINX_Tutorial : UINX_Window
     protected virtual void OnSkipButton(UINX_Button button)
     {
         button.Hide();
-        Overmind.AsteroidGameOvermind.Sounds[0].Play();
+        Overmind.AsteroidGameManager.Sounds[0].Play();
         ended = true;
         Overmind.PlayerStation.SetUINXMode(false);
         Asteroidogeon.gameObject.SetActive(true);
@@ -94,13 +94,13 @@ public class UINX_Tutorial : UINX_Window
                 }
             } else
             {
-                if (tutorialTS < Overmind.AsteroidGameOvermind.Tutorial_Time)
+                if (tutorialTS < Overmind.AsteroidGameManager.Tutorial_Time)
                 {
                     tutorialTS += Time.deltaTime;
-                    TimeTxt.text = "Time to start:\n" + (Mathf.Floor((Overmind.AsteroidGameOvermind.Tutorial_Time - tutorialTS)));
-                } else if (tutorialTS > Overmind.AsteroidGameOvermind.Tutorial_Time)
+                    TimeTxt.text = "Time to start:\n" + (Mathf.Floor((Overmind.AsteroidGameManager.Tutorial_Time - tutorialTS)));
+                } else if (tutorialTS > Overmind.AsteroidGameManager.Tutorial_Time)
                 {
-                    tutorialTS = Overmind.AsteroidGameOvermind.Tutorial_Time;
+                    tutorialTS = Overmind.AsteroidGameManager.Tutorial_Time;
                     TimeTxt.text = "TIME TO START!";
                     ended = true;
                     Overmind.PlayerStation.SetUINXMode(false);
@@ -127,7 +127,7 @@ public class UINX_Tutorial : UINX_Window
                 if (showTS >= Show_Time)
                 {
                     hidding = 1;
-                    Overmind.AsteroidGameOvermind.NewGame();
+                    Overmind.AsteroidGameManager.NewGame();
                     Hide();
                 }
             }
