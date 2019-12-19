@@ -17,8 +17,8 @@ public class UINX_Score : UINX_Window
     protected virtual void OnMenuButton(UINX_Button button)
     {
         button.Hide();
-        Overmind.AsteroidGameOvermind.Sounds[0].Play();
-        Overmind.EventsOvermind.Send(new HideUINX_Window() { HideAll = true } );
+        Overmind.AsteroidGameManager.Sounds[0].Play();
+        Overmind.EventsManager.Send(new HideUINX_Window() { HideAll = true } );
         Overmind.PlayerStation.SetUINXMode(false);
     }
 }
